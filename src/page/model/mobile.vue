@@ -1,6 +1,6 @@
 <template>
     <div id="mobile-model">
-        mobile model
+        <img :src="`../../../static/topic_pic/img${item}.jpg`" alt="" v-for="item in 14">
     </div>
 </template>
 
@@ -36,5 +36,10 @@
         color: #000;
         margin-left: 10%;
         background: #fff;
+        overflow: auto;
+        img {
+            width: 100%;
+            display: block;
+        }
     }
 </style>
