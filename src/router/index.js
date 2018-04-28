@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import PageBase from '@/components/page_base'
+import Index from '@/page/index'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: 'PageBase',
+            component: PageBase,
+            children: [
+                {
+                    path: '', redirect: 'index'
+                },
+                {
+                    name: 'index',
+                    path: 'index',
+                    component: Index,
+                }
+            ]
+        }
+    ]
 })

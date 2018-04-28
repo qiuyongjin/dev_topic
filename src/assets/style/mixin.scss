@@ -1,0 +1,352 @@
+// 颜色
+$themeColor: #c41230; // 主题色
+$fontThemeColor: #fff; // 文字颜色(一般情况下和$themeColor一起使用)
+$headerVanBg: #fff; // 导航栏背景
+$headerVanFc: #000; // 导航栏文字
+$fc: #000; // 文字
+$grayFc: #999; // 文字灰
+$fc666: #666; // 文字灰
+$borderLine: #ccc; // 边框线
+$bodyBg: #f5f5f5; // body背景
+
+// 宽高
+$bodyWidth: 640px;
+$headerNavH: 44px; // 导航栏高度
+
+// 字号
+$headerNavTxtFs: 18px; // 导航栏标题字号
+$headerNavIconFs: 16px; // 导航栏字体图标大小
+
+.f12 {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.f13 {
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.f14 {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.f15 {
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.f16 {
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.f18 {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.f20 {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.red-fc {
+    color: $themeColor !important;
+}
+
+.gray-fc {
+    color: $grayFc !important;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.clear:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.ellipsis-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+a {
+    color: $fc;
+    text-decoration: blink;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+}
+
+em {
+    font-style: normal;
+    unicode-bidi: embed;
+}
+
+li {
+    list-style: none;
+}
+
+input, textarea {
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+}
+
+.max-width {
+    max-width: $bodyWidth;
+}
+
+.before {
+    position: relative;
+    &:before {
+        position: absolute;
+        display: block;
+        content: '';
+    }
+}
+
+.after {
+    position: relative;
+    &:after {
+        position: absolute;
+        display: block;
+        content: '';
+    }
+}
+
+.v-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    background: #000;
+    z-index: 11;
+}
+
+// 背景图片地址和大小
+@mixin bis($url) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+@mixin borderRadius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+//定位全屏
+@mixin allcover {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+//定位上下左右居中
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//定位上下居中
+@mixin ct {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+//定位上下居中
+@mixin cl {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+//宽高
+@mixin wh($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin lineHeight($height) {
+    height: $height;
+    line-height: $height;
+}
+
+//字体大小、行高、字体
+@mixin font($size, $line-height, $family: 'Microsoft YaHei') {
+    font: #{$size}/#{$line-height} $family;
+}
+
+//字体大小，颜色
+@mixin sc($size, $color) {
+    font-size: $size;
+    color: $color;
+}
+
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between) {
+    display: flex;
+    justify-content: $type;
+}
+
+// .5px边框线
+@mixin smallLine($type:x) {
+    transform-origin: 0 0;
+    @if $type==x {
+        transform: scale(1, 0.5);
+    } @else {
+        transform: scale(0.5, 1);
+    }
+}
+
+// 细的线条
+.t-line {
+    position: relative;
+    &:after {
+        position: absolute;
+        display: block;
+        content: '';
+        height: 1px;
+        left: 0;
+        right: 0;
+        top: 0;
+        background: $borderLine;
+        @include smallLine();
+    }
+}
+
+@mixin TRBL-line($type) {
+    position: relative;
+    &:after {
+        position: absolute;
+        display: block;
+        content: '';
+        background: $borderLine;
+        @if $type==top {
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            @include smallLine();
+        } @else if $type==right {
+            width: 1px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            @include smallLine('y');
+        } @else if $type==bottom {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            @include smallLine();
+        } @else if $type==left {
+            width: 1px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            @include smallLine('y');
+        }
+    }
+}
+
+.go_icon {
+    position: absolute;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    top: 50%;
+    margin-top: -6px;
+    display: block;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.ini-btn {
+    @include lineHeight(50px);
+    display: block;
+    background: $themeColor;
+    color: $fontThemeColor;
+    text-align: center;
+    font-weight: 500;
+}
+
+//header
+.header {
+    position: fixed !important;
+    max-width: $bodyWidth;
+    width: 100%;
+    top: 0;
+    left: auto;
+    align-items: center;
+    background: #fff;
+    z-index: 10;
+    @include fj();
+    @include lineHeight(50px);
+    .title {
+        flex: 1;
+        text-align: center;
+        font-weight: 700;
+    }
+    .left {
+        .header_back {
+            width: 12px;
+            height: 12px;
+            display: block;
+            margin: 0 auto;
+            border-left: 2px solid #151515;
+            border-top: 2px solid #151515;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+    }
+    .btn-wrap {
+        width: 50px;
+        text-align: center;
+    }
+}
+
+.header + .content-wrap {
+    padding-top: 50px;
+}
+
+/**
+bottom-line
+ */
+.bottom-line {
+    @include TRBL-line('bottom');
+}
+
+/**
+top-line
+ */
+.top-line {
+    @include TRBL-line('top');
+}
+
+/**
+right line
+ */
+.right-line {
+    @include TRBL-line('right');
+}
+
+div#app {
+    max-width: $bodyWidth;
+    margin: 0 auto;
+}
