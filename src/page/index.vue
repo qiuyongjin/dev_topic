@@ -1,10 +1,10 @@
 <template>
     <el-container class="container-box bg-color">
-        <el-header class="header-box">
+        <el-header class="header-box bottom-line">
             <span>DevTopic</span>
         </el-header>
         <el-container>
-            <el-aside class="aside-box">
+            <el-aside class="aside-box right-line">
                 <ul>
                     <li>图片</li>
                 </ul>
@@ -47,10 +47,22 @@
                 display: inline-block;
                 font-size: 25px;
             }
+            &:after {
+                background: #000;
+            }
         }
         .aside-box {
             width: 35px !important;
             text-align: center;
+            li {
+                @include wh(35px, 35px);
+                display: inline-block;
+                line-height: 35px;
+                cursor: pointer;
+            }
+            &:after {
+                background: #000;
+            }
         }
 
     }
