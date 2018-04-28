@@ -1,6 +1,12 @@
 <template>
     <div id="mobile-model">
-        <img :src="`../../../static/topic_pic/img${item}.jpg`" alt="" v-for="item in 14">
+        <div class="img-box bottom-line" v-for="(item,index) in 14" :key="index" @click="funSelect(index)">
+            <div class="info">
+                {{++index}}
+                <p>{{hot.list}}</p>
+            </div>
+            <img :src="`../../../static/topic_pic/img${item}.jpg`" :alt="item">
+        </div>
     </div>
 </template>
 
@@ -12,15 +18,21 @@
         name: 'dev-topic',
         data () {
             return {
-                status: 0, // 0:mobile 1:PC
+                count: this.$store.state.count,
+                hot: {
+                    list: [],
+                    item: {}
+                }
             }
         },
         created () {
-
+            console.log(this.$store.state.count);
         },
         methods: {
-            funMP () {
-                this.status = (this.status) ? 0 : 1;
+            funSelect (index) {
+                this.hot.list.push(index);
+                this.hot.item[index] = `this is ${index}`;
+                this.$store.commit('increment')
             }
         },
         components: {}
@@ -40,6 +52,18 @@
         img {
             width: 100%;
             display: block;
+        }
+    }
+
+    .img-box {
+        .info {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        &:after {
+            background: red;
+            /*background: #3af833;*/
         }
     }
 </style>
