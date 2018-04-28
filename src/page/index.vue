@@ -4,7 +4,7 @@
             <span>
                 DevTopic
             </span>
-            <label>_Bate</label>
+            <label>Bate</label>
             <el-row class="btns-box">
                 <el-button type="primary" size="mini" @click="funModel">{{(model)?'手机':'电脑'}}</el-button>
             </el-row>
@@ -13,14 +13,16 @@
             <el-aside class="aside-box right-line">
                 <ul>
                     <li class="bottom-line" @click="funAddImg">图片</li>
-                    <li class="bottom-line">热区</li>
+                    <li class="bottom-line" @click="funAddHot">热区</li>
                 </ul>
             </el-aside>
             <el-main>
                 <router-view></router-view>
             </el-main>
             <el-aside class="aside-right-box left-line">
-                <div class="console-box">{{$store.state}}</div>
+                bg: <span>{{$store.state.element[$store.state.elementIndex].bgImg}}</span>
+                <input type="text" v-model="$store.state.element[$store.state.elementIndex].bgImg">
+                <div class="console-box">{{$store.state.element}}</div>
             </el-aside>
         </el-container>
     </el-container>
@@ -46,7 +48,16 @@
                 this.model = (this.model) ? 0 : 1;
             },
             funAddImg () {
-                this.$store.commit('funAddImg', `../../../static/topic_pic/img${++this.num}.jpg`);
+                this.$store.commit('funAddElement', `../../../static/topic_pic/img${++this.num}.jpg`);
+            },
+            /**
+             * 添加热区
+             */
+            funAddHot () {
+                let hot = {
+                    style: {top: '10%', left: '10%'}
+                };
+                this.$store.state.element[this.$store.state.elementIndex].hot.push(hot);
             }
         },
         components: {}

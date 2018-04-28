@@ -1,10 +1,10 @@
 <template>
     <div id="mobile-model">
-        <div class="img-box bottom-line" v-for="(item,index) in $store.state.bgItem" :key="index" @click="funSelect(index)">
-            <div class="info">
-                {{++index}}
-            </div>
-            <img :src="item" :alt="index">
+        <div class="img-box bottom-line" v-for="(item,index) in $store.state.element" :key="index" @click="funSelect(index)">
+            <a href="javascript:;" class="hot-element" :style="style.style" v-for="(style,style_index) in item.hot">
+                <i @click="funDelHot(index,style_index)">del</i>
+            </a>
+            <img :src="item.bgImg" :alt="index">
         </div>
     </div>
 </template>
@@ -15,30 +15,21 @@
     export default {
         name: 'dev-topic',
         data () {
-            return {
-                count: this.$store.state.count,
-                /*bgItem: [
-                    `../../../static/topic_pic/img1.jpg`
-                ],*/
-                hot: {
-                    list: [],
-                    item: {}
-                }
-            }
+            return {}
         },
         created () {
             console.log(this.$store.state.count);
         },
         methods: {
+            /**
+             * 设置选择当前元素
+             * @param index
+             */
             funSelect (index) {
-                let t = comJS.isArrayExis(this.hot.list, index);
-                console.log(t);
-                if (!t) {
-                    this.hot.list.push(index);
-                    this.hot.item[index] = `this is ${index}`;
-                    this.$store.state.hot = this.hot;
-                    this.$store.commit('increment');
-                }
+                this.$store.commit('funElementIndex', index);
+            },
+            funDelHot (index, style_index) {
+                this.$store.commit('funDelHot', {index: index, style_index: style_index});
             }
         },
         components: {}
@@ -62,14 +53,24 @@
     }
 
     .img-box {
-        .info {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-        }
+        position: relative;
         &:after {
             background: red;
             /*background: #3af833;*/
         }
     }
+
+    .hot-element {
+        @include wh(30%, 30%);
+        display: inline-block;
+        position: absolute;
+        border: red 1px solid;
+        background: rgba(255, 0, 0, 0.5);
+        i {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
 </style>
