@@ -4,7 +4,7 @@
             <span>
                 DevTopic
             </span>
-            <label>_bate</label>
+            <label>_Bate</label>
             <el-row class="btns-box">
                 <el-button type="primary" size="mini" @click="funModel">{{(model)?'手机':'电脑'}}</el-button>
             </el-row>
@@ -12,7 +12,7 @@
         <el-container>
             <el-aside class="aside-box right-line">
                 <ul>
-                    <li class="bottom-line">图片</li>
+                    <li class="bottom-line" @click="funAddImg">图片</li>
                     <li class="bottom-line">热区</li>
                 </ul>
             </el-aside>
@@ -34,6 +34,7 @@
         name: 'dev-topic',
         data () {
             return {
+                num: 1,
                 model: 0, // 0:mobile 1:PC
             }
         },
@@ -43,6 +44,9 @@
         methods: {
             funModel () {
                 this.model = (this.model) ? 0 : 1;
+            },
+            funAddImg () {
+                this.$store.commit('funAddImg', `../../../static/topic_pic/img${++this.num}.jpg`);
             }
         },
         components: {}

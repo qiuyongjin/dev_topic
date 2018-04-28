@@ -12,6 +12,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         count: 0,
+        bgItem: [
+            `../../../static/topic_pic/img1.jpg`
+        ],
         // 热区
         hot: {
             list: [],
@@ -21,6 +24,9 @@ export default new Vuex.Store({
     mutations: {
         increment (state) {
             state.count++;
+        },
+        funAddImg (state, img_url) {
+            state.bgItem.push(img_url);
         }
     }
 });

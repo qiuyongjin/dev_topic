@@ -1,24 +1,25 @@
 <template>
     <div id="mobile-model">
-        <div class="img-box bottom-line" v-for="(item,index) in 14" :key="index" @click="funSelect(index)">
+        <div class="img-box bottom-line" v-for="(item,index) in $store.state.bgItem" :key="index" @click="funSelect(index)">
             <div class="info">
                 {{++index}}
-                <p>{{hot.list}}</p>
             </div>
-            <img :src="`../../../static/topic_pic/img${item}.jpg`" :alt="item">
+            <img :src="item" :alt="index">
         </div>
     </div>
 </template>
 
 <script>
-    // import {getProject, getUserInfo, addProject} from "../../../assets/js/getData";
-    // import {ding} from '../../../assets/js/common'
+    import comJS from '../../assets/js/common'
 
     export default {
         name: 'dev-topic',
         data () {
             return {
                 count: this.$store.state.count,
+                /*bgItem: [
+                    `../../../static/topic_pic/img1.jpg`
+                ],*/
                 hot: {
                     list: [],
                     item: {}
@@ -30,9 +31,14 @@
         },
         methods: {
             funSelect (index) {
-                this.hot.list.push(index);
-                this.hot.item[index] = `this is ${index}`;
-                this.$store.commit('increment')
+                let t = comJS.isArrayExis(this.hot.list, index);
+                console.log(t);
+                if (!t) {
+                    this.hot.list.push(index);
+                    this.hot.item[index] = `this is ${index}`;
+                    this.$store.state.hot = this.hot;
+                    this.$store.commit('increment');
+                }
             }
         },
         components: {}
