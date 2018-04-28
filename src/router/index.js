@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PageBase from '@/components/page_base'
 import Index from '@/page/index'
+import MobileModel from '@/page/model/mobile'
 
 Vue.use(Router);
 
@@ -20,6 +21,14 @@ export default new Router({
                     name: 'index',
                     path: 'index',
                     component: Index,
+                    children: [
+                        {
+                            name: 'mobile',
+                            path: 'm',
+                            component: MobileModel,
+
+                        }
+                    ]
                 }
             ]
         }

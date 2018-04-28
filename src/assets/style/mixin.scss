@@ -340,6 +340,13 @@ top-line
 }
 
 /**
+left line
+ */
+.left-line {
+    @include TRBL-line('left');
+}
+
+/**
 right line
  */
 .right-line {
