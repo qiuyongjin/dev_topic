@@ -17,7 +17,7 @@ export default new Vuex.Store({
             {
                 hot: [
                     {
-                        style: {top: '20%', left: '50%'}
+                        style: {top: '0px', left: '0px'}
                     }
                 ],
                 bgImg: '../../../static/topic_pic/img1.jpg'

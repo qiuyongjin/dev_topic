@@ -6,7 +6,7 @@
             </span>
             <label>Bate</label>
             <el-row class="btns-box">
-                <el-button type="primary" size="mini" @click="funModel">{{(model)?'手机':'电脑'}}</el-button>
+                <el-button type="primary" size="mini" @click="funModel">保存</el-button>
             </el-row>
         </el-header>
         <el-container>
@@ -20,9 +20,21 @@
                 <router-view></router-view>
             </el-main>
             <el-aside class="aside-right-box left-line">
-                bg: <span>{{$store.state.element[$store.state.elementIndex].bgImg}}</span>
-                <input type="text" v-model="$store.state.element[$store.state.elementIndex].bgImg">
-                <div class="console-box">{{$store.state.element}}</div>
+                <el-collapse class="collapse-box" v-model="activeNames" @change="handleChange">
+                    <el-collapse-item title="属性" name="1">
+                        <div>
+                            bg: <span>{{$store.state.element[$store.state.elementIndex].bgImg}}</span>
+                            <input type="text" v-model="$store.state.element[$store.state.elementIndex].bgImg">
+                        </div>
+                    </el-collapse-item>
+                    <el-collapse-item title="反馈 Feedback" name="2">
+                        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
+                        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+                    </el-collapse-item>
+                    <el-collapse-item title="element" name="4">
+                        <div>{{$store.state.element}}</div>
+                    </el-collapse-item>
+                </el-collapse>
             </el-aside>
         </el-container>
     </el-container>
@@ -38,6 +50,7 @@
             return {
                 num: 1,
                 model: 0, // 0:mobile 1:PC
+                activeNames: ['1']
             }
         },
         created () {
@@ -58,6 +71,9 @@
                     style: {top: '10%', left: '10%'}
                 };
                 this.$store.state.element[this.$store.state.elementIndex].hot.push(hot);
+            },
+            handleChange (val) {
+                console.log(val);
             }
         },
         components: {}
