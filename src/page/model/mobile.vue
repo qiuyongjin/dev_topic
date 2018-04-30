@@ -99,7 +99,8 @@
         color: #000;
         margin-left: 10%;
         background: #fff;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         img {
             width: 100%;
             display: block;
