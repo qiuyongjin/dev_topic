@@ -6,7 +6,8 @@
                @mousemove="onmousemove"
                @mousedown="onmousedown"
                @mouseup="onmouseup">
-                <i @click="funDelHot(index,style_index)">del</i>
+                <i class="del-hot" @click="funDelHot(index,style_index)">del</i>
+                <i class="drag-hot"></i>
             </a>
             <img :src="item.bgImg" :alt="index">
         </div>
@@ -121,13 +122,27 @@
         cursor: all-scroll;
         display: inline-block;
         position: absolute;
-        border: red 1px solid;
-        background: rgba(255, 0, 0, 0.5);
+        border: rgba(255, 0, 0, 0.5) 1px solid;
+        background: rgba(255, 0, 0, 0.2);
         i {
             position: absolute;
+        }
+        .del-hot {
             top: 0;
             right: 0;
             cursor: pointer;
+        }
+        .drag-hot {
+            @include wh(10px, 10px);
+            background: goldenrod;
+            right: 0;
+            bottom: 0;
+            cursor: nwse-resize;
+        }
+        &:hover {
+            z-index: 10;
+            border-color: red;
+            background: rgba(255, 0, 0, 0.5);
         }
     }
 
