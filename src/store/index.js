@@ -16,11 +16,11 @@ export default new Vuex.Store({
         element: [
             {
                 hot: [
-                    {
-                        style: {top: '0px', left: '0px'}
-                    }
+                    // {
+                    //     style: {width: '200px', height: '100px', top: '10%', left: '20%'}
+                    // }
                 ],
-                bgImg: '../../../static/topic_pic/img1.jpg'
+                bgImg: '../../../static/topic_pic/graduate_1.jpg'
             }
         ]
     },
@@ -43,11 +43,7 @@ export default new Vuex.Store({
          */
         funAddElement (state, img_url) {
             let obj = {
-                hot: [
-                    {
-                        style: {top: '20%', left: '50%'}
-                    }
-                ],
+                hot: [],
                 bgImg: img_url
             };
             state.element.push(obj);
@@ -59,10 +55,25 @@ export default new Vuex.Store({
          * @param style_index - 热区style 索引
          */
         funDelHot (state, obj) {
-            // state.element[obj.index].hot[obj.style_index].style = {top: '20%', left: '90%'};
-            // console.log(state.element[obj.index].hot[obj.style_index]);
-
-            state.element[obj.index].hot.splice(obj.style_index, 1);
+            state.element[obj[0]].hot.splice(obj[1], 1);
+        },
+        /**
+         * 修改热区样式
+         * @param state
+         * @param obj
+         */
+        setHotStyle (state, obj) {
+            let el = state.element[obj.index].hot[obj.style_index].style;
+            if (obj.type == 0) {
+                // state.element[obj.index].hot[obj.style_index].style = {left: obj.left, top: obj.top};
+                el.left = obj.left;
+                el.top = obj.top;
+            }
+            else {
+                // state.element[obj.index].hot[obj.style_index].style = {width: obj.width, height: obj.height};
+                el.width = obj.width;
+                el.height = obj.height;
+            }
         }
     }
 });

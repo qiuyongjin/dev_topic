@@ -1,12 +1,19 @@
 <template>
     <el-container class="container-box bg-color">
+        <el-dialog title="HTML" :visible.sync="dialogTableVisible">
+            <div class="code-box">
+                <textarea v-model="codeHTML"></textarea>
+            </div>
+        </el-dialog>
+
+
         <el-header class="header-box bottom-line">
             <span>
                 DevTopic
             </span>
             <label>Bate</label>
             <el-row class="btns-box">
-                <el-button type="primary" size="mini" @click="funModel">保存</el-button>
+                <el-button type="primary" size="mini" @click="funCoding">生成代码</el-button>
             </el-row>
         </el-header>
         <el-container>
@@ -38,6 +45,7 @@
             </el-aside>
         </el-container>
     </el-container>
+
 </template>
 
 <script>
@@ -49,19 +57,49 @@
         data () {
             return {
                 num: 1,
-                model: 0, // 0:mobile 1:PC
-                activeNames: ['1']
+                codeHTML: null,
+                activeNames: ['1'],
+                dialogTableVisible: false
             }
         },
         created () {
 
         },
         methods: {
-            funModel () {
-                this.model = (this.model) ? 0 : 1;
+            /**
+             * 生成代码
+             */
+            funCoding () {
+                this.codeHTML = JSON.stringify(this.$store.state.element);
+                // this.codeHTML = document.getElementById('mobile-model').outerHTML;
+
+                let html = '';
+                this.$store.state.element.map((el) => {
+                    console.log(el);
+                    let hot = '';
+                    el.hot.map((hotEl, i) => {
+                        let nn = (i) ? '            ' : '';
+                        let style = JSON.stringify(hotEl.style).replace(/"/g,"");
+                        style = style.substring(1, style.length - 1).replace(/,/g,";");
+                        hot += `${nn}<a href="javascript:;" class="hot" style="${style}">${hotEl}</a>\n`
+                    });
+
+                    html += `    <div class="img-box">
+                ${hot}
+                <img src="${el.bgImg}">
+        </div>\n`;
+                });
+
+
+                this.codeHTML = `<div id="topic-box">\n${html}</div>`;
+
+                this.dialogTableVisible = true;
             },
+            /**
+             * 添加背景
+             */
             funAddImg () {
-                this.$store.commit('funAddElement', `../../../static/topic_pic/img${++this.num}.jpg`);
+                this.$store.commit('funAddElement', `../../../static/topic_pic/graduate_${++this.num}.jpg`);
             },
             /**
              * 添加热区
@@ -85,6 +123,14 @@
 
     .bg-color {
         background: #303030;
+    }
+
+    .code-box {
+        height: 500px;
+        textarea {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .container-box {

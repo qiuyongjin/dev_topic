@@ -1,21 +1,15 @@
 <template>
     <div id="mobile-model">
-        <div class="img-box bottom-line" v-for="(item,index) in $store.state.element" :key="index" @click="funSelect(index)">
-            <a href="javascript:;" class="hot-element" :style="style.style"
-               v-for="(style,style_index) in item.hot"
-               @mousemove="onmousemove"
-               @mousedown="onmousedown"
-               @mouseup="onmouseup">
-                <i class="del-hot" @click="funDelHot(index,style_index)">del</i>
-                <i class="drag-hot"></i>
-            </a>
-            <img :src="item.bgImg" :alt="index">
+        <div class="img-box container bottom-line" v-for="(item,index) in $store.state.element" :key="index">
+            <hot :hot="hot" :element="[index,hot_index]" v-for="(hot,hot_index) in item.hot" :key="hot_index"></hot>
+            <img :src="item.bgImg" :alt="index" @click.stop="funSelect(index)">
         </div>
     </div>
 </template>
 
 <script>
     import comJS from '../../assets/js/common'
+    import hot from './hot'
 
     export default {
         name: 'dev-topic',
@@ -27,7 +21,10 @@
             }
         },
         created () {
-            console.log(this.$store.state.count);
+            // console.log(this.$store.state.count);
+        },
+        mounted () {
+
         },
         methods: {
             /**
@@ -37,57 +34,11 @@
             funSelect (index) {
                 this.$store.commit('funElementIndex', index);
             },
-            /**
-             * 删除热区
-             * @param index
-             * @param style_index
-             */
-            funDelHot (index, style_index) {
-                this.$store.commit('funDelHot', {index: index, style_index: style_index});
-            },
-            /**
-             * 移动热区
-             * @param e
-             * @returns {boolean}
-             */
-            onmousemove: function (e) {
-                if (this.dragStart != 1) return false;
+            test () {
 
-                let element = e.target;
-                let w = element.clientWidth;
-
-
-                // element.style.top = element.offsetTop + (e.offsetY - element.offsetTop) + 'px';
-                let x = element.offsetLeft + (e.offsetX - this.hotX);
-                let y = element.offsetTop + (e.offsetY - this.hotY);
-
-
-                element.style.left = (x < 0) ? 0 : x + 'px';
-                element.style.top = (y < 0) ? 0 : y + 'px';
-                // console.log(e);
-                // console.log(element.offsetLeft + e.offsetX, e.offsetX);
-            },
-            onmousedown (e) {
-                e.preventDefault();
-                this.dragStart = 1;
-                this.hotX = e.offsetX;
-                this.hotY = e.offsetY;
-
-                let element = e.target;
-                let w = element.clientWidth;
-
-
-                console.log(e);
-                // console.log(e.clientX);
-                console.log(e.offsetX);
-
-
-            },
-            onmouseup () {
-                this.dragStart = 0;
             }
         },
-        components: {}
+        components: {hot}
     }
 </script>
 
@@ -115,35 +66,6 @@
             /*background: #3af833;*/
         }
     }
-
-    .hot-element {
-        @include wh(200px, 100px);
-        -webkit-box-direction: normal;
-        cursor: all-scroll;
-        display: inline-block;
-        position: absolute;
-        border: rgba(255, 0, 0, 0.5) 1px solid;
-        background: rgba(255, 0, 0, 0.2);
-        i {
-            position: absolute;
-        }
-        .del-hot {
-            top: 0;
-            right: 0;
-            cursor: pointer;
-        }
-        .drag-hot {
-            @include wh(10px, 10px);
-            background: goldenrod;
-            right: 0;
-            bottom: 0;
-            cursor: nwse-resize;
-        }
-        &:hover {
-            z-index: 10;
-            border-color: red;
-            background: rgba(255, 0, 0, 0.5);
-        }
-    }
-
 </style>
+
+
