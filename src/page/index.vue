@@ -34,10 +34,6 @@
                             <input type="text" v-model="$store.state.element[$store.state.elementIndex].bgImg">
                         </div>
                     </el-collapse-item>
-                    <el-collapse-item title="反馈 Feedback" name="2">
-                        <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-                        <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
-                    </el-collapse-item>
                     <el-collapse-item title="element" name="4">
                         <div>{{$store.state.element}}</div>
                     </el-collapse-item>
@@ -70,30 +66,46 @@
              * 生成代码
              */
             funCoding () {
+                let _this = this;
                 this.codeHTML = JSON.stringify(this.$store.state.element);
                 // this.codeHTML = document.getElementById('mobile-model').outerHTML;
 
                 let html = '';
                 this.$store.state.element.map((el) => {
-                    console.log(el);
                     let hot = '';
-                    el.hot.map((hotEl, i) => {
-                        let nn = (i) ? '            ' : '';
-                        let style = JSON.stringify(hotEl.style).replace(/"/g,"");
-                        style = style.substring(1, style.length - 1).replace(/,/g,";");
-                        hot += `${nn}<a href="javascript:;" class="hot" style="${style}">${hotEl}</a>\n`
+                    el.hot.map((hotEl) => {
+                        _this.funFormatStyle(hotEl.style);
+                        let style = (JSON.stringify(hotEl.style).replace(/"/g, "")).replace(/,/g, ";");
+                        style = style.substring(1, style.length - 1) + ';';
+                        hot += `\n        <a href="javascript:;" class="hot" style="${style}"></a>`
                     });
 
-                    html += `    <div class="img-box">
-                ${hot}
-                <img src="${el.bgImg}">
+                    // 拼接
+                    html += `    <div class="img-box">${hot}
+            <img src="${el.bgImg}">
         </div>\n`;
                 });
-
-
-                this.codeHTML = `<div id="topic-box">\n${html}</div>`;
-
+                this.codeHTML = `<div class="topic-box">\n${html}</div>`;
                 this.dialogTableVisible = true;
+            },
+            /**
+             * 格式化样式
+             * @param style - object
+             */
+            funFormatStyle (style) {
+                let result = '';
+                for (let key in style) {
+                    console.log(key, this.percent(style[key], 375));
+                }
+            },
+            /**
+             * px转换百分比
+             * @param obj1 x\y
+             * @param obj2 宽\高
+             * @returns {string}
+             */
+            percent: function bfb (obj1, obj2) {
+                return ((obj1 / obj2) * 100).toFixed(3) + "%";
             },
             /**
              * 添加背景
@@ -106,7 +118,7 @@
              */
             funAddHot () {
                 let hot = {
-                    style: {top: '10%', left: '10%'}
+                    style: {} // width: '200px', height: '100px', top: '10%', left: '10%'
                 };
                 this.$store.state.element[this.$store.state.elementIndex].hot.push(hot);
             },

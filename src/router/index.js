@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PageBase from '@/components/page_base'
 import Index from '@/page/index'
 import MobileModel from '@/page/model/mobile'
+import PCModel from '@/page/model/pc'
 
 Vue.use(Router);
 
@@ -18,14 +19,20 @@ export default new Router({
                     path: '', redirect: 'index'
                 },
                 {
-                    name: 'index',
                     path: 'index',
+                    name: 'index',
                     component: Index,
                     children: [
                         {
-                            name: 'mobile',
                             path: 'm',
+                            name: 'mobile',
                             component: MobileModel,
+
+                        },
+                        {
+                            path: 'pc',
+                            name: 'pc',
+                            component: PCModel,
 
                         }
                     ]
