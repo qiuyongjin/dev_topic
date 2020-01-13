@@ -1,5 +1,5 @@
 # dev_topic
-# hello world
+# hello
 > dev topic
 
 ## Build Setup
